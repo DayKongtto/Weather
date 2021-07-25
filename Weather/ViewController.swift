@@ -69,6 +69,12 @@ extension ViewController: UITableViewDataSource {
         
 //        cell.leftLabel.text = self.dateFormatter.string(from: self.dates[indexPath.row])
         cell.countryLabel.text = self.countries[indexPath.row].koreanName
+        let assetName: String = self.countries[indexPath.row].assetName
+        guard let flagImage: UIImage = UIImage(named: "flag_\(assetName)") else{
+            print("no image")
+            return cell
+        }
+        cell.countryImageView = UIImageView(image: flagImage)
         
         return cell
     }

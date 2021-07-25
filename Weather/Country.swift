@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 /*
  {"korean_name":"한국","asset_name":"kr"}
@@ -14,6 +15,7 @@ import Foundation
 struct Country: Codable {
     let koreanName: String
     let assetName: String
+    
     
     enum CodingKeys: String, CodingKey {
         case koreanName = "korean_name"

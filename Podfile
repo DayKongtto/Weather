@@ -7,4 +7,6 @@ target 'Weather' do
 
   # Pods for Weather
 
+pod 'Reusable'
+
 end

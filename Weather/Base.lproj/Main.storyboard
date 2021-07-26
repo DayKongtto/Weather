@@ -51,7 +51,6 @@
                                         <connections>
                                             <outlet property="countryImageView" destination="UAG-KW-sU9" id="5wb-8a-zLJ"/>
                                             <outlet property="countryLabel" destination="ceB-wj-YiO" id="hyQ-2o-2rV"/>
-                                            <segue destination="42i-sz-51S" kind="show" id="1bK-T1-OEg"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -69,6 +68,7 @@
                     <navigationItem key="navigationItem" id="lnv-op-cxe"/>
                     <connections>
                         <outlet property="tableView" destination="u5c-2k-EOD" id="sv6-bP-PeZ"/>
+                        <segue destination="42i-sz-51S" kind="show" identifier="showSecondView" id="mfO-Lb-r1m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -78,7 +78,7 @@
         <!--Second View Controller-->
         <scene sceneID="Lkq-rG-Po9">
             <objects>
-                <viewController id="42i-sz-51S" customClass="SecondViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="secondView" id="42i-sz-51S" customClass="SecondViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Q8i-oa-PM2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -140,7 +140,6 @@
                                             <outlet property="cityNameLabel" destination="IYv-wB-KD6" id="wwQ-ft-DTX"/>
                                             <outlet property="rainFallLabel" destination="09r-Ii-wbX" id="7PI-8R-lES"/>
                                             <outlet property="temperatureLabel" destination="JG0-Zf-wgU" id="ydR-ZS-so0"/>
-                                            <segue destination="piv-rO-AOi" kind="show" id="jft-0D-3dB"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -158,11 +157,12 @@
                     <navigationItem key="navigationItem" id="kAJ-Se-AVs"/>
                     <connections>
                         <outlet property="tableView" destination="P9R-qF-i03" id="IE9-L2-Gqn"/>
+                        <segue destination="piv-rO-AOi" kind="show" identifier="showThirdView" id="X6B-xK-toA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ViK-u7-8h8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1603" y="88"/>
+            <point key="canvasLocation" x="1594" y="88"/>
         </scene>
         <!--Third View Controller-->
         <scene sceneID="oVR-oM-WO5">

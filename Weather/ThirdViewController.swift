@@ -24,9 +24,8 @@ class ThirdViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         // Do any additional setup after loading the view.
-        if let imageName: String = assetName {
+        if let imageName: String = currentCity?.getStateAssetText() {
             if let stateImage: UIImage = UIImage(named: imageName) {
                 imageView.image = stateImage
             }

@@ -20,6 +20,8 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        self.tableView.register(cellType: CodeCountryTableViewCell.self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,17 +50,14 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-        
+
         guard let nextViewController: SecondViewController = segue.destination as? SecondViewController else {
             return
         }
         
-        guard let cell: CountryTableViewCell = sender as? CountryTableViewCell else {
-            return
+        if let index: Int = selectedCellIndexRow {
+            nextViewController.currentCoutry = countries[index]
         }
-        
-        //nextViewController.textToSet = cell.countryLabel.text
-        nextViewController.currentCoutry = countries[0]
     }
 
 
@@ -73,16 +72,17 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-        let cell: CountryTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIndentifier, for: indexPath) as! CountryTableViewCell
+//        let cell: CodeCountryTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIndentifier, for: indexPath) as! CodeCountryTableViewCell
+        let cell = tableView.dequeueReusableCell(for: indexPath) as CodeCountryTableViewCell
         
 //        cell.leftLabel.text = self.dateFormatter.string(from: self.dates[indexPath.row])
-        cell.countryLabel.text = self.countries[indexPath.row].koreanName
+        cell.coutryLabel.text = self.countries[indexPath.row].koreanName
         let assetName: String = self.countries[indexPath.row].assetName
         guard let flagImage: UIImage = UIImage(named: "flag_\(assetName)") else{
             print("no image")
             return cell
         }
-        cell.countryImageView = UIImageView(image: flagImage)
+        cell.countryImageView.image = flagImage
         
         return cell
     }
@@ -90,7 +90,18 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedCellIndexRow = indexPath.row
         print("select! \(indexPath.row)")
+        /// 1번째 방법
+//        if let secondViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "secondView") as? SecondViewController,
+//           let index = selectedCellIndexRow {
+//            secondViewController.currentCoutry = countries[index]
+//            self.navigationController?.pushViewController(secondViewController, animated: true)
+//        }
+        
+        /// 2번째 방법
+        performSegue(withIdentifier: "showSecondView", sender: self)
     }
+    
+    
 //    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 //        return "국가"
 //    }

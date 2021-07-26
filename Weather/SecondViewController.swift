@@ -14,14 +14,17 @@ class SecondViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     let cellIndentifier: String = "cityCell"
+    var selectedCellIndexRow: Int?
     
     var cities: [City] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        //self.tableView.delegate = self
+        self.tableView.delegate = self
         self.tableView.dataSource = self
+        
+        self.tableView.register(cellType: CodeCityTableViewCell.self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,17 +59,19 @@ class SecondViewController: UIViewController {
             return
         }
         
-        guard let cell: CityTableViewCell = sender as? CityTableViewCell else {
-            return
+        if let index: Int = selectedCellIndexRow {
+            nextViewController.currentCity = cities[index]
         }
-        
-        nextViewController.currentCity = cities[cell.accessibilityElementCount()]
-        nextViewController.assetName = currentCoutry?.assetName
     }
 
 }
 
-extension SecondViewController: UITableViewDataSource {
+extension SecondViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        let height: Float = 60
+        return 60
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.cities.count
@@ -75,13 +80,14 @@ extension SecondViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-        let cell: CityTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIndentifier, for: indexPath) as! CityTableViewCell
-        
+        let cell = tableView.dequeueReusableCell(for: indexPath) as CodeCityTableViewCell
+                
         guard let stateImage: UIImage = UIImage(named: self.cities[indexPath.row].getStateAssetText()) else{
             print("no image")
             return cell
         }
-        cell.cityImageView = UIImageView(image: stateImage)
+        
+        cell.cityImageView.image = stateImage
         
         cell.cityNameLabel.text = self.cities[indexPath.row].cityName
         cell.temperatureLabel.text = self.cities[indexPath.row].getTemperatureText()
@@ -90,6 +96,14 @@ extension SecondViewController: UITableViewDataSource {
         
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedCellIndexRow = indexPath.row
+        print("select! \(indexPath.row)")
+        
+        /// 2번째 방법
+        performSegue(withIdentifier: "showThirdView", sender: self)
     }
     
 //    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

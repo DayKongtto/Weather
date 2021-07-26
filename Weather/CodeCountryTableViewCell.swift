@@ -8,17 +8,25 @@
 import UIKit
 import SnapKit
 
-class CodeCountryTableViewCell: UITableViewCell {
+class CodeCountryTableViewCell: BaseTableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    let countryImageView: UIImageView = UIImageView()
+    let coutryLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
+    }()
+    
+    override func setupCell() {
+        contentView.addSubview(countryImageView)
+        countryImageView.snp.makeConstraints { (make) -> Void in
+            make.left.equalTo(contentView).offset(8)
+            make.top.bottom.equalTo(contentView)
+        }
+        contentView.addSubview(coutryLabel)
+        coutryLabel.snp.makeConstraints { (make) -> Void in
+            make.centerY.equalTo(countryImageView)
+            make.left.equalTo(countryImageView.snp.right).offset(10)
+        }
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

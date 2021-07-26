@@ -8,6 +8,10 @@
 import UIKit
 
 class CityTableViewCell: UITableViewCell {
+    @IBOutlet var cityImageView: UIImageView!
+    @IBOutlet var cityNameLabel: UILabel!
+    @IBOutlet var temperatureLabel: UILabel!
+    @IBOutlet var rainFallLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

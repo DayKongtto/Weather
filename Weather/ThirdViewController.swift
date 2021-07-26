@@ -8,11 +8,29 @@
 import UIKit
 
 class ThirdViewController: UIViewController {
-
+    
+    var assetName: String?
+    var currentCity: City?
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var stateLabel: UILabel!
+    @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var rainFallLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        if let imageName: String = assetName {
+            if let stateImage: UIImage = UIImage(named: imageName) {
+                imageView.image = stateImage
+            }
+        }
+        stateLabel.text = currentCity?.getStateKoreanText()
+        temperatureLabel.text = currentCity?.getTemperatureText()
+        rainFallLabel.text = currentCity?.getRainFallText()
+        
+        self.navigationItem.title = currentCity?.cityName
     }
     
 

@@ -10,67 +10,85 @@ import UIKit
 class SecondViewController: UIViewController {
     
     var textToSet: String?
+    var currentCoutry: Country?
 
     @IBOutlet weak var tableView: UITableView!
-//    let cellIndentifier: String = "cityCell"
-//
-//    var cities: [City] = []
+    let cellIndentifier: String = "cityCell"
+    
+    var cities: [City] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         //self.tableView.delegate = self
-//        self.tableView.dataSource = self
-//
-//        let jsonDecoder: JSONDecoder = JSONDecoder()
-//        guard let dataAsset: NSDataAsset = NSDataAsset(name: "countries") else {
-//            return
-//        }
-//
-//        do {
-//            self.countries = try jsonDecoder.decode([Country].self, from: dataAsset.data)
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//
-//        self.tableView.reloadData()
+        self.tableView.dataSource = self
+        
+        let jsonDecoder: JSONDecoder = JSONDecoder()
+        if let assetName: String = currentCoutry?.assetName {
+            if let dataAsset: NSDataAsset = NSDataAsset(name: assetName) {
+                do {
+                    self.cities = try jsonDecoder.decode([City].self, from: dataAsset.data)
+                } catch {
+                    print(error.localizedDescription)
+                }
+                
+                self.tableView.reloadData()
+            } else {
+                return
+            }
+        }
+        
+        self.navigationItem.title = currentCoutry?.koreanName
+
+    }
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+        
+        guard let nextViewController: ThirdViewController = segue.destination as? ThirdViewController else {
+            return
+        }
+        
+        guard let cell: CityTableViewCell = sender as? CityTableViewCell else {
+            return
+        }
+        
+        nextViewController.currentCity = cities[cell.accessibilityElementCount()]
+        nextViewController.assetName = currentCoutry?.assetName
     }
 
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return self.countries.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//
-//        let cell: CountryTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIndentifier, for: indexPath) as! CountryTableViewCell
-//
-////        cell.leftLabel.text = self.dateFormatter.string(from: self.dates[indexPath.row])
-//        cell.countryLabel.text = self.countries[indexPath.row].koreanName
-//
-//        return cell
-//    }
-//
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return "도시"
-//    }
-//
-//    // MARK: - Navigation
-//
-//    // In a storyboard-based application, you will often want to do a little preparation before navigation
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        // Get the new view controller using segue.destination.
-//        // Pass the selected object to the new view controller.
-//
-//        guard let nextViewController:  = segue.destination as? SecondViewController else {
-//            return
-//        }
-//
-//        guard let cell: CountryTableViewCell = sender as? CountryTableViewCell else {
-//            return
-//        }
-//
-//        nextViewController.textToSet = cell.countryLabel.text
-//    }
+}
 
+extension SecondViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.cities.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
+        let cell: CityTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIndentifier, for: indexPath) as! CityTableViewCell
+        
+        guard let stateImage: UIImage = UIImage(named: self.cities[indexPath.row].getStateAssetText()) else{
+            print("no image")
+            return cell
+        }
+        cell.cityImageView = UIImageView(image: stateImage)
+        
+        cell.cityNameLabel.text = self.cities[indexPath.row].cityName
+        cell.temperatureLabel.text = self.cities[indexPath.row].getTemperatureText()
+        cell.rainFallLabel.text = self.cities[indexPath.row].getRainFallText()
+        
+        
+        
+        return cell
+    }
+    
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return currentCoutry?.koreanName
+//    }
 }

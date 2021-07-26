@@ -16,11 +16,49 @@ import Foundation
  }
  */
 
-struct City {
+struct City: Codable {
     let cityName: String
     let state: Int
     let celsius: Float
     let rainfallProbability: Int
+    
+    func getTemperatureText() -> String {
+        return "섭씨 \(celsius)도 / 화씨 \((celsius * 9 / 5) + 32)도"
+    }
+    
+    func getStateKoreanText() -> String {
+        switch state {
+        case 10:
+            return "맑음"
+        case 11:
+            return "흐림"
+        case 12:
+            return "비"
+        case 13:
+            return "눈"
+        default:
+            return "\(state)"
+        }
+    }
+    
+    func getStateAssetText() -> String {
+        switch state {
+        case 10:
+            return "sunny"
+        case 11:
+            return "cloudy"
+        case 12:
+            return "rainy"
+        case 13:
+            return "snowy"
+        default:
+            return "\(state)"
+        }
+    }
+    
+    func getRainFallText() -> String {
+        return "강수확률 \(rainfallProbability)%"
+    }
     
     enum CodingKeys: String, CodingKey {
         case state, celsius

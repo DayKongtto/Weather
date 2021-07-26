@@ -32,6 +32,8 @@ class ViewController: UIViewController {
         } else {
             return
         }
+        
+        self.navigationItem.title = "국가"
     }
 
     
@@ -50,7 +52,8 @@ class ViewController: UIViewController {
             return
         }
         
-        nextViewController.textToSet = cell.countryLabel.text
+        //nextViewController.textToSet = cell.countryLabel.text
+        nextViewController.currentCoutry = countries[cell.accessibilityElementCount()]
     }
 
 
@@ -79,7 +82,7 @@ extension ViewController: UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "국가"
-    }
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return "국가"
+//    }
 }

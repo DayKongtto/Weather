@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 /*
  {"korean_name":"한국","asset_name":"kr"}

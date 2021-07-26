@@ -11,14 +11,19 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     let cellIndentifier: String = "countryCell"
+    var selectedCellIndexRow: Int?
     
     var countries: [Country] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        //self.tableView.delegate = self
+        self.tableView.delegate = self
         self.tableView.dataSource = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         let jsonDecoder: JSONDecoder = JSONDecoder()
         if let dataAsset: NSDataAsset = NSDataAsset(name: "countries") {
@@ -53,13 +58,13 @@ class ViewController: UIViewController {
         }
         
         //nextViewController.textToSet = cell.countryLabel.text
-        nextViewController.currentCoutry = countries[cell.accessibilityElementCount()]
+        nextViewController.currentCoutry = countries[0]
     }
 
 
 }
 
-extension ViewController: UITableViewDataSource {
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.countries.count
@@ -82,6 +87,10 @@ extension ViewController: UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedCellIndexRow = indexPath.row
+        print("select! \(indexPath.row)")
+    }
 //    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 //        return "국가"
 //    }

@@ -22,6 +22,10 @@ class SecondViewController: UIViewController {
         // Do any additional setup after loading the view.
         //self.tableView.delegate = self
         self.tableView.dataSource = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         let jsonDecoder: JSONDecoder = JSONDecoder()
         if let assetName: String = currentCoutry?.assetName {
@@ -39,8 +43,8 @@ class SecondViewController: UIViewController {
         }
         
         self.navigationItem.title = currentCoutry?.koreanName
-
     }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

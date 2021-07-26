@@ -8,5 +8,6 @@ target 'Weather' do
   # Pods for Weather
 
 pod 'Reusable'
+pod 'SnapKit', '~> 5.0.0'
 
 end
